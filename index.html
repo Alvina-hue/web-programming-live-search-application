@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Search Application</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            width: 60%;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 15px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+
+        .student {
+            background: #e8f0fe;
+            padding: 12px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Live Student Search</h1>
+
+    <input type="text" id="search"
+           placeholder="Search student name or course...">
+
+    <div id="results"></div>
+
+</div>
+
+<script>
+
+// Student data
+const students = [
+    {name: "Alina", course: "MCA"},
+    {name: "Anu", course: "BCA"},
+    {name: "Arun", course: "Computer Science"},
+    {name: "Meera", course: "MCA"},
+    {name: "Rahul", course: "BBA"},
+    {name: "Akhil", course: "BCA"},
+    {name: "Diya", course: "Computer Science"}
+];
+
+// Get HTML elements
+const search = document.getElementById("search");
+const results = document.getElementById("results");
+
+// Display all students initially
+function displayStudents(data) {
+
+    results.innerHTML = "";
+
+    if (data.length === 0) {
+        results.innerHTML = "<p>No results found!</p>";
+        return;
+    }
+
+    data.forEach(student => {
+
+        results.innerHTML += `
+            <div class="student">
+                <h3>${student.name}</h3>
+                <p>Course: ${student.course}</p>
+            </div>
+        `;
+
+    });
+}
+
+// Live search using Fetch API
+search.addEventListener("input", async function() {
+
+    const query = search.value.toLowerCase();
+
+    try {
+
+        const response = await fetch(
+            "data.json"
+        );
+
+        const data = await response.json();
+
+        const filtered = data.filter(student =>
+            student.name.toLowerCase().includes(query) ||
+            student.course.toLowerCase().includes(query)
+        );
+
+        displayStudents(filtered);
+
+    } catch (error) {
+
+        // Use local student data if JSON is unavailable
+        const filtered = students.filter(student =>
+            student.name.toLowerCase().includes(query) ||
+            student.course.toLowerCase().includes(query)
+        );
+
+        displayStudents(filtered);
+    }
+
+});
+
+// Show all students initially
+displayStudents(students);
+
+</script>
+
+</body>
+</html>

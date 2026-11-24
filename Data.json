@@ -1,0 +1,10 @@
+
+[
+    {"name": "Alina", "course": "MCA"},
+    {"name": "Anu", "course": "BCA"},
+    {"name": "Arun", "course": "Computer Science"},
+    {"name": "Meera", "course": "MCA"},
+    {"name": "Rahul", "course": "BBA"},
+    {"name": "Akhil", "course": "BCA"},
+    {"name": "Diya", "course": "Computer Science"}
+]
